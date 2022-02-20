@@ -1,6 +1,10 @@
 #include <iostream>
 #include <random>
 
+
+
+
+
 int main()
 {
     // Генератор случайных чисел (такой же как rand())
