@@ -1,0 +1,85 @@
+#include <iostream>
+
+// Функция, которая принимает два аргумента
+int nod(int a, int b)
+{
+    // Алгоритм Евклида
+    while(a != 0 && b != 0)
+    {
+        if(a > b)
+            a %= b;
+        else
+            b %= a;
+    }
+
+    return a + b;
+}
+
+// Функция, которая принимает два аргумента и вызывает другую функцию
+int nok(int a, int b)
+{
+    return a * b / nod(a, b);
+}
+
+// Функция без возвращаемого значения
+void say_hello()
+{
+    std::cout << "Hello, World!" << std::endl;
+}
+
+void say_hello_to(char name[])
+{
+    std::cout << "Hello, " << name << "!" << std::endl;
+    if(name[0] != 'A')
+        return; // В void функции return тоже может использоваться
+    std::cout << "Nice to meet you!" << std::endl;
+}
+
+// Принимает аргумент по значению
+void inc_1(int x)
+{
+    x = x + 1;
+}
+
+// Передача аргумента по указателю
+void inc_2(int *ptr)
+{
+    *ptr = *ptr + 1;
+}
+
+// Передача аргумента по ссылке
+void inc_3(int& x)
+{
+    x = x + 1;
+}
+
+// Функция main без аргументов.
+// Вызывается при старте программы.
+int main()
+{
+    int original = 10;
+    // reference - переменная ссылка на переменную original (синоним для переменной)
+    int& reference = original;
+    reference *= 2;
+    std::cout << "original = " << original << std::endl;
+
+    int var = 7;
+    inc_1(var);
+    std::cout << "(after inc_1) var = " << var << std::endl;
+    inc_2(&var);
+    std::cout << "(after inc_2) var = " << var << std::endl;
+    inc_3(var);
+    std::cout << "(after inc_3) var = " << var << std::endl;
+
+    int a, b;
+    std::cin >> a >> b;
+    std::cout << "NOD(" << a << ", " << b << ") = " << nod(a, b) << std::endl;
+    std::cout << "NOK(" << a << ", " << b << ") = " << nok(a, b) << std::endl;
+
+    say_hello();
+    say_hello_to("Alex");
+    say_hello_to("Bob");
+
+    // Возвращаемое значение - код завершения программы
+    return 0;
+}
