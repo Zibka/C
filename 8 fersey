@@ -1,0 +1,58 @@
+
+#include <iostream>
+
+using namespace std;
+
+bool isBeat(int row1, int colum1, int row2, int colum2)
+{
+    return (row1 == row2) || (colum1 == colum2) || (std::abs(row2 - row1) == std::abs(colum2 - colum1));
+    
+}
+
+bool isBeateOnRow(int board[], int row, int colum)
+{
+    for(int i = 0; i < row; ++i)
+        if(isBeat(i, board[i], row, colum))
+        return true;
+    return false;
+    
+}
+
+
+void printBoard(int board[], int n)
+{
+    for(int j = n - 1; j >=0; --j)
+    {
+        std::cout << "|";
+        for(int i = 0; i < n; ++i)
+            std::cout << (board[j] == i?"*": " ") << "|";
+        std::cout << std::endl;
+        for (int i = 0; i < n * 2 + 1; ++i)
+        std::cout << "-";
+        std::cout << std::endl;
+    }
+}
+int main()
+{
+    const int n = 8;
+    int board[n];
+    
+    int row = 0;
+    int colum = 0;
+    while(row < n)
+    {
+        while(colum < n && isBeateOnRow(board,row,colum))
+            ++colum;
+            
+        if(colum < n)
+        {
+            board[row++] = colum;
+            colum = 0;
+        }
+        else
+            colum = board[--row] + 1;
+    }
+    printBoard(board, n);
+    
+    return 0;
+}
