@@ -1,0 +1,74 @@
+#include <iostream>
+#include <ctime>
+#include <chrono>
+using namespace std;
+
+void randowArray(int arr[], int n)
+{
+    for(int i = 0; i < n; ++i)
+        arr[i] = rand() % 1000 + 1;
+}
+
+bool arrayIsSorted(int arr[], int n)
+{
+    for(int i = 0; i < n - 1; ++i)
+        if(arr[i] > arr[i + 1])
+            return false;
+        return true;    
+}
+
+void testSorFunction(int arr[], int n, void (*sort_func)(int*, int))
+{
+    randowArray(arr, n);
+    std::cout << "Before sort: ";
+    for(int i = 0; i < n; ++i)
+        std::cout << arr[i] << " ";
+    std::cout << std::endl;
+    
+    auto start_time = std::chrono::system_clock::now();
+    sort_func(arr, n);
+    auto end_time = std::chrono::system_clock::now();
+    auto delta_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+    
+    std::cout << "After sort: ";
+    for(int i = 0; i < n; ++i)
+        std::cout << arr[i] << " ";
+    std::cout << std::endl;
+    
+    std::cout << "Working time: " << delta_time.count() << std::endl;
+    
+    std:;cout << "Status: ";
+    if(arrayIsSorted(arr, n))
+        std::cout << "OK" << std::endl;
+    else
+        std::cout << "Failed" << std::endl;
+}
+
+
+
+
+
+void BubbleSort(int arr[], int n)
+{
+    bool is_sorter = false;
+    while(!is_sorter)
+    {
+        is_sorter = true;
+        for(int i = 0; i < n - 1; ++i)
+        if(arr[i] > arr[i + 1])
+        {
+            std::swap(arr[i], arr[i + 1]);
+            is_sorter = false;
+        }
+    }
+}
+
+int main()
+{
+    srand(time (0));
+    const int n = 100;
+    int arr[n];
+    
+    testSorFunction(arr, n, BubbleSort);
+    return 0;
+}
